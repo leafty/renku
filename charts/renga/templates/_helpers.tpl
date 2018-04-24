@@ -62,5 +62,5 @@ Define subcharts full names
 {{- end -}}
 
 {{- define "ui.fullname" -}}
-{{- printf "%s-%s-%s" .Release.Name "renga" "ui" | replace "+" "_" | trunc 63 | trimSuffix "-" -}}
+{{- printf "%s-%s" .Release.Name "ui" | replace "+" "_" | trunc 63 | trimSuffix "-" -}}
 {{- end -}}

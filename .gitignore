@@ -3,6 +3,9 @@ services/storage/data/
 services/gitlab/
 services/keycloak/data/
 
+charts/renga/charts/*.tgz
+charts/renga/requirements.lock
+
 # Idea software family
 .idea/
 
@@ -10,6 +13,8 @@ services/keycloak/data/
 .ivy/
 
 # Created by https://www.gitignore.io/api/python
+
+.DS_Store
 
 ### Python ###
 # Byte-compiled / optimized / DLL files

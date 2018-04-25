@@ -185,7 +185,10 @@ $(makefile-services): %: $(PLATFORM_BASE_DIR)/%
 	$(MAKE) -C $(PLATFORM_BASE_DIR)/$@
 
 # Docker actions
-.PHONY: docker-images docker-network docker-compose-up docker-pull
+.PHONY: login docker-images docker-network docker-compose-up docker-pull
+login:
+	@echo "${DOCKER_PASSWORD}" | docker login -u="${DOCKER_USERNAME}" --password-stdin ${DOCKER_REGISTRY}
+
 docker-images: $(scala-services) $(dockerfile-services) $(makefile-services)
 
 docker-network:

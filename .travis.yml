@@ -28,6 +28,7 @@ env:
   global:
     - HELM_URL=https://storage.googleapis.com/kubernetes-helm
     - HELM_TGZ=helm-v2.8.2-linux-amd64.tar.gz
+    - PLATFORM_VERSION=development 
 
 git:
   depth: false
@@ -43,6 +44,7 @@ branches:
   only:
     - master
     - development
+    - test-chart-deployment
 
 language: python
 
@@ -92,4 +94,4 @@ deploy:
       git diff;
       cd ..
     on:
-      branch: development
+      branch: test-chart-deployment

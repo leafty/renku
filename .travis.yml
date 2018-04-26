@@ -28,12 +28,15 @@ env:
   global:
     - HELM_URL=https://storage.googleapis.com/kubernetes-helm
     - HELM_TGZ=helm-v2.8.2-linux-amd64.tar.gz
-    - PLATFORM_VERSION=development 
+    - PLATFORM_VERSION=development
 
 git:
   depth: false
 
 addons:
+  apt:
+    packages:
+      - git
   hosts:
     - renga.build
     - gitlab.renga.build

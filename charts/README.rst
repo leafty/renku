@@ -6,6 +6,7 @@ Testing locally
 
 Requires minikube, kubectl, helm and python.
 
+
 .. code-block:: console
 
     $ minikube start
@@ -17,13 +18,10 @@ Requires minikube, kubectl, helm and python.
     $ helm repo add renku https://swissdatasciencecenter.github.io/helm-charts/
     $ helm dep build renku
     $ helm install --name nginx-ingress --namespace kube-system stable/nginx-ingress --set controller.hostNetwork=true
-    $ helm upgrade renku --install \
-        --namespace renku \
-        -f minikube-values.yaml \
-        --set global.renku.domain=$(minikube ip) \
-        --set ui.gitlabUrl=http://$(minikube ip)/gitlab \
-        --set jupyterhub.hub.extraEnv.GITLAB_HOST=http://$(minikube ip)/gitlab \
-        ./renku
+    $ helm upgrade --install renku  --namespace renku -f minikube-values.yaml renku --wait --force --timeout 600
+
+Make sure you have `$(minikube ip) renku-k8s gitlab.renku-k8s` line
+in your `/etc/hosts`.
 
 Due to issue `minikube #1568
 <https://github.com/kubernetes/minikube/issues/1568>`_,
@@ -40,7 +38,7 @@ The platform takes some time to start, to check the pods status do:
     $ kubectl -n renku get po --watch
 
 and wait until all pods are running.
-Now, we can go to: :code:`http://$(minikube-ip)/`
+Now, we can go to: :code:`http://renku-k8s.build/`
 
 
 Building images

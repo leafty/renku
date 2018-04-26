@@ -146,6 +146,6 @@ http://localhost/auth/admin, with the user ``admin`` and password ``admin``
 Platform Endpoint
 -----------------
 
-By default, the platform is configured to use ``http://renku.local`` as the
+By default, the platform is configured to use ``http://renku.build`` as the
 endpoint. You can change this by defining the ``RENKU_ENDPOINT`` environment
 variable before starting the platform services.

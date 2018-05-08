@@ -127,6 +127,7 @@ scala-services = \
 	renku-storage
 
 makefile-services = \
+    incubator-proxy \
  	renku-ui \
  	renku-python
 

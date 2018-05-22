@@ -7,19 +7,17 @@ First Steps
     :description: First steps with Renku
     :keywords: hello world, first steps, starter, primer
 
-Interaction with the platform takes place via the Python-based
-command-line interface (CLI) and the Python API. You can get both via pip:
+Interaction with the platform takes place via the Python-based command-line
+interface (CLI) and the Python API. We recommend using the officially-
+recommended python dependency manager `pipenv
+<https://docs.pipenv.org/basics/>`_ for python dependency installations. You
+can install it with ``pip``:
 
 .. code-block:: console
 
-   $ pip install -e git+https://github.com/SwissDataScienceCenter/
-   renku-python.git#egg=renku
+   $ pip install pipenv
 
-.. note::
-
-   We recommend using `virtualenv
-   <https://virtualenv.pypa.io/en/stable/>`_ when installing the Renku
-   package.
+We will use ``pipenv`` below to install the ``renku`` CLI.
 
 
 Our first Renku project
@@ -32,6 +30,14 @@ First, create a project directory:
     $ mkdir -p ~/renku-projects/myproject
     $ cd ~/renku-projects/myproject
 
+Install ``renku`` and start the shell:
+
+.. code-block:: console
+
+    $ pipenv install --skip-lock renku
+    $ pipenv lock --pre
+    $ pipenv shell
+
 Initialize the project as a Renku project:
 
 .. code-block:: console
@@ -43,9 +49,11 @@ This command created a git repository for your project and an additional
 
 .. code-block:: console
 
-    $ tree -L 1 .renku
-    .renku
-    └── metadata.yml
+    $ ls -la .renku
+    total 8
+    drwxr-xr-x  3 rok  staff  102 May 22 17:23 .
+    drwxr-xr-x  8 rok  staff  272 May 22 17:23 ..
+    -rw-r--r--  1 rok  staff  308 May 22 17:23 metadata.yml
 
 Create a dataset and import data
 --------------------------------
@@ -56,16 +64,16 @@ or publication.
 .. code-block:: console
 
     $ renku dataset create mydataset
-    $ tree data
-    data
-    └── mydataset
-        └── metadata.yml
+    Creating a dataset ... OK
+    $ ls -l data
+    total 0
+    drwxr-xr-x  3 rok  staff  102 May 22 17:30 mydata
 
 At this point, our dataset just consists of metadata in JSON-LD format:
 
 .. code-block:: console
 
-    $ cat data/mydataset/metadata.yml
+    $ cat data/mydata/metadata.yml
     '@context':
       added: http://schema.org/dateCreated
       affiliation: scoro:affiliate
@@ -91,10 +99,10 @@ At this point, our dataset just consists of metadata in JSON-LD format:
       affiliation: null
       email: roskarr@ethz.ch
       name: Rok Roskar
-    created: 2018-03-11 22:23:02.409684
+    created: 2018-05-22 15:30:06.071631
     files: {}
-    identifier: ae503fdf-40ff-419b-8356-131747c22187
-    name: mydataset
+    identifier: 6a354882-8308-42c0-9516-0b3c55b81f53
+    name: mydata
 
 We can import data from a variety of sources: local directories, remote URLs,
 local or remote git repositories or other renku project. Here, we will import the
@@ -103,7 +111,7 @@ local or remote git repositories or other renku project. Here, we will import th
 .. code-block:: console
 
     $ renku dataset add mydataset https://raw.githubusercontent.com/
-    SwissDataScienceCenter/renku-python/latest/README.rst
+    SwissDataScienceCenter/renku/master/README.rst
 
 Until now, we have created a Renku project and populated it with a dataset and
 some data. Next, we will see how to use Renku to create a repeatable workflow.
@@ -154,4 +162,3 @@ scientific analysis workflow enabled by Renku. Each component of the workflow
 we produced is bundled with rich metadata that allows us to continue to track
 its lineage and therefore to reuse it as a building block in other projects
 and workflows.
-

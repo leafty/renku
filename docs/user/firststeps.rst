@@ -135,7 +135,7 @@ Now, combine these intermediate outputs into our final calculation:
 
 .. code-block:: console
 
-    $ renku wc readme_science readme_renku > wc.out
+    $ renku run wc readme_science readme_renku > wc.out
 
 For each of our invocations of `renku run`, Renku recorded the command we
 executed into a `Common Workflow Language <http://www.commonwl.org/>`_ (CWL)
@@ -159,6 +159,82 @@ command:
 
 This sequence represents the basic building blocks of a reproducible
 scientific analysis workflow enabled by Renku. Each component of the workflow
-we produced is bundled with rich metadata that allows us to continue to track
+we produced is bundled with metadata that allows us to continue to track
 its lineage and therefore to reuse it as a building block in other projects
 and workflows.
+
+
+Updating results based on new input data
+----------------------------------------
+
+Suppose our input data changes -- what are the consequences for the downstream
+analysis? Renku gives you some simple tools to inspect the state of your
+project and, if necessary, update results in response to new data or even
+changed source code.
+
+Lets modify one of the two files we are using here -- open a text editor and
+simply remove the first few lines from ``data/mydataset/README.rst``. When you are done, commit your change with this command:
+
+.. code-block:: console
+
+    $ git commit -am 'modified README.rst'
+
+To see what effect this has on the steps we have done so far, use the ``renku status`` command:
+
+.. code-block:: console
+
+    $ renku status
+    On branch master
+    Files generated from outdated inputs:
+      (use "renku log <file>..." to see the full lineage)
+
+          readme_renku: data/mydataset/README.rst#42a770ef
+          readme_science: data/mydataset/README.rst#42a770ef
+          wc.out: data/mydataset/README.rst#42a770ef, data/mydataset/README.rst#42a770ef
+
+    Input files used in different versions:
+      (use "renku log --revision <sha1> <file>" to see a lineage for the given revision)
+
+          data/mydataset/README.rst: 998dd21c, 42a770ef
+
+There is a lot of information here - first of all, we know that our outputs
+are out of date. Renku tells us that ``readme_renku``, ``readme_science`` and
+``wc.out`` are all outdated, and that the reason is that ``README.rst`` used
+to create those outputs is different from the one currently in the repository.
+
+Updating our result is simple -- since we recorded all of the steps along the way, Renku can generate a workflow to repeat the analysis on the new data. For this, we can use the ``update`` command:
+
+.. code-block:: console
+
+    $ renku update
+    ...
+    [job step_3] completed success
+    [step step_3] completed success
+    [workflow 13bbd0b4779246b5a8c2f2fd85fba962.cwl] completed success
+    {
+        "output_0": {
+            "location": "file:///.../demo/readme_science",
+            "basename": "readme_science",
+            "class": "File",
+            "checksum": "sha1$42513cc8dcaf92f33b9cec9f976ad7fe0554d0d5",
+            "size": 147,
+            "path": "/.../demo/readme_science"
+        },
+        "output_1": {
+            "location": "file:///.../demo/readme_renku",
+            "basename": "readme_renku",
+            "class": "File",
+            "checksum": "sha1$b73e7a9d94c6d24622ed6d48d0ea4e6dee5485b5",
+            "size": 245,
+            "path": "/.../demo/readme_renku"
+        },
+        "output_2": {
+            "location": "file:///.../demo/wc.out",
+            "basename": "wc.out",
+            "class": "File",
+            "checksum": "sha1$803e3e8c3c0f6d5985bc2192f4ac727bef6eaf5b",
+            "size": 327,
+            "path": "/.../demo/wc.out"
+        }
+    }
+    Final process status is success

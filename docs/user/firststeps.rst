@@ -202,7 +202,9 @@ are out of date. Renku tells us that ``readme_renku``, ``readme_science`` and
 ``wc.out`` are all outdated, and that the reason is that ``README.rst`` used
 to create those outputs is different from the one currently in the repository.
 
-Updating our result is simple -- since we recorded all of the steps along the way, Renku can generate a workflow to repeat the analysis on the new data. For this, we can use the ``update`` command:
+Updating our result is simple -- since we recorded all of the steps along the
+way, Renku can generate a workflow to repeat the analysis on the new data. For
+this, we can use the ``update`` command:
 
 .. code-block:: console
 
@@ -238,3 +240,115 @@ Updating our result is simple -- since we recorded all of the steps along the wa
         }
     }
     Final process status is success
+
+
+Making your project live on the Renku platform
+----------------------------------------------
+
+So far, the project we have created exists only on your machine. When you want
+to share the project with others, it is necessary to upload it to a server. To
+get started, navigate to the Renku platform URL in your browser -- if you spun
+up your own platform for testing purposes following e.g. `the quickstart
+instructions <setup.rst>`_, this will be at http://renku.build.
+
+The first page allows you to explore public data. You can log in by clicking
+in the upper-right of the frame:
+
+.. image:: ../_static/images/renku-login.png
+
+After you log in, create a new project by clicking the "+" in the upper right.
+Call it "First steps" and enter a brief description. Set the project to have
+restricted visibility:
+
+.. image:: ../_static/images/create-project.png
+
+In Renku, the primary means of exchanging information between your machine and
+the server is via your project repository. Under the hood, we are using  the
+`git version control system <https://git-scm.com/>`_ - if you are not
+familiar with it yet, we strongly recommend that you read some of the
+`excellent available documentation <https://git-scm.com/doc/ext>`_ -- it will
+definitely come in handy not only for working with Renku but working with any
+projects requiring version control.
+
+To link the project on your machine to the project we just created, you need
+to create a "remote", which is basically a pointer to a server that will host
+your project on-line. Once you create the project, navigate to the
+``Settings`` tab and copy the text next to the ``SSH`` box:
+
+.. image:: ../_static/images/project-settings.png
+
+In your terminal, run the following commands in your project directory:
+
+.. code-block:: console
+
+    $ git remote add origin <copied text from SSH box above>
+    $ git push --set-upstream origin master
+
+You now have a version of your project hosted on-line on the Renku platform.
+
+
+Basic components of the web user interface
+------------------------------------------
+
+The Renku platform provides you with a simple user interface where you can
+initiate discussions (Ku) about any aspect of your project, view interactive
+notebooks and even initiate new computations.
+
+
+Kus
+^^^
+
+A "Ku" is a basic building block of a Renku poem - in our case, it is the
+essential  component of a data analytics process. It is the primary way to
+communicate about results, code, and data with collaborators. Once inside a
+project, you can start a Ku by clicking on the "+" in the upper right and
+selecting "ku":
+
+.. image:: ../_static/images/create-ku.png
+
+Once the Ku is created you can completing it by creating "contributions" -
+these might be questions you want to ask of the data, descriptions of a
+solution to a problem or anything in between.
+
+The Ku contributions support full markdown formatting and even embedded media
+elements such as images, code files or jupyter notebooks. To embed a file from
+your repository, simply follow the syntax
+
+.. code-block:: console
+
+    ![description](location)
+
+Note that as you start to type the ``location``, you will automatically be
+shown a mini file-browser with which you can navigate to the file you need.
+
+
+File lineage viewer
+^^^^^^^^^^^^^^^^^^^
+
+Navigate to the ``Files`` tab and click on ``Data``. Recall that we used
+``README.rst`` as the basic starting point in the workflow we created earlier.
+Clicking on it will show you the *lineage graph*:
+
+.. image:: ../_static/images/lineage-graph.png
+
+This shows you the dependencies between inputs and outputs as well as the
+execution steps that connect them.
+
+
+Notebooks
+^^^^^^^^^
+
+In Renku, all of the changes to your code and data are recorded and versioned
+automatically. In addition, you have the option to spawn a jupyter notebook to
+interactively work with your project. To start a notebook server, navigate to
+``Notebooks`` under the ``Files`` tab. If you have any notebooks saved in the
+``notebooks`` directory in your project (which at this point of the tutorial
+we do not), they will appear there. Otherwise, you are presented a ``Launch
+Notebooks Server`` button which you can use to create a new (blank) notebook.
+
+
+Where to go from here
+^^^^^^^^^^^^^^^^^^^^^
+
+**CLI**: For documentation of the Renku command-line interface, follow the `renku
+python CLI docs <http://renku-python.readthedocs.io/en/latest/cli.html>`_.

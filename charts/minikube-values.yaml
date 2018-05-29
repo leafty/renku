@@ -3,8 +3,8 @@
 #
 
 global:
-  renga:
-    domain: renga-k8s.build
+  renku:
+    domain: renku-k8s.build
 
 ingress:
   enabled: true
@@ -12,7 +12,7 @@ ingress:
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/ssl-redirect: false
   hosts:
-  - "renga-k8s.build"
+  - "renku-k8s.build"
 
 jupyterhub:
   rbac:
@@ -29,6 +29,16 @@ jupyterhub:
       enabled: true
       cryptoKey: 86282f03d9886a64a46ee38f946e9ee27a600df4559584eeb90d0bfbd5a3dc0e
 
+gitlab:
+  sshPort: 2222
+
+ui:
+  gitlabUrl: gitlab.renku-k8s.build
+  jupyterhubUrl: http://renku-k8s.build/jupyterhub
+
 notebooks:
   jupyterhub_base_url: /jupyterhub/
   jupyterhub_api_token: notebookstoken
+
+runner:
+  enabled: true

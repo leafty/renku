@@ -188,6 +188,9 @@ gitlab:
   ## Resource requests/limits for Gitlab
   # resources: {}
 
+  ## Registration token for gitlab runners (initial value, can be regenerated from gitlab admin ui)
+  sharedRunnersRegistrationToken: '8dbf016f5b73d5608390183bbea9ce5fbed83a9dadefa719245ab93eb255cc29'
+
   ## Persistent Volume settings
   persistence:
     ## Set to false to disable the use of Persistent Volume
@@ -284,6 +287,14 @@ ui:
   # service:
   #   port: 80
   #   type: ClusterIP
+  ## Set the GitLab URL
+  # gitlabUrl: "http://gitlab.renku.build"
+  ## Configure application ID from "{{ gitlabUrl }}/oauth/application"
+  ## by setting redirect URL to "{{ baseUrl }}/login/redirect/gitlab"
+  ## and set the application ID as the "gitlabClientId" chart value.
+  # gitlabClientId: "renku-ui"
+  ## Set the JupyterHub URL
+  # jupyterhubUrl: "http://jupyterhub.renku.build"
 
 ## Configuration for the jupyterhub service
 jupyterhub:
@@ -366,3 +377,18 @@ tests:
   image:
     repository: renku/tests
     tag: latest
+
+## Gitlab runners configuration
+## See: http://docs.gitlab.com/ee/install/kubernetes/gitlab_runner_chart.html
+runner:
+  ## Set to true to deploy the runners
+  enabled: false
+  ## Gitlab URL
+  gitlabUrl: http://renku-gitlab/ # renku-gitlab <- gitlab chart name
+  ## Registration token, must be equal to `gitlab.sharedRunnersRegistrationToken`
+  runnerRegistrationToken: '8dbf016f5b73d5608390183bbea9ce5fbed83a9dadefa719245ab93eb255cc29'
+  runners:
+    ## To ba able to use docker:dind
+    privileged: true
+  rbac:
+    create: true

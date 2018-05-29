@@ -1,6 +1,9 @@
 Helm Charts for Deploying RENKU on Kubernetes
 =============================================
 
+Helm 2.9.0 or newer is recommended as we use the :code:`before-hook-creation` hook deletion policy.
+See also: `before-hook-creation delete policy <https://github.com/kubernetes/helm/commit/1d4883bf3c85ea43ed071dff4e02cc47bb66f44f>`_.
+
 Testing locally
 ---------------
 
@@ -16,9 +19,16 @@ Requires minikube, kubectl, helm and python.
     $ minikube addons enable coredns
     $ helm init
     $ helm repo add renku https://swissdatasciencecenter.github.io/helm-charts/
+    $ helm repo add gitlab https://charts.gitlab.io
     $ helm dep build renku
-    $ helm install --name nginx-ingress --namespace kube-system stable/nginx-ingress --set controller.hostNetwork=true
-    $ helm upgrade --install renku  --namespace renku -f minikube-values.yaml renku --wait --force --timeout 600
+    $ helm upgrade --install nginx-ingress --namespace kube-system \
+        --set controller.hostNetwork=true \
+        --set tcp.2222=renku/renku-gitlab:22 \
+        stable/nginx-ingress
+    $ helm upgrade renku --install \
+        --namespace renku \
+        -f minikube-values.yaml \
+        ./renku
 
 Make sure you have `$(minikube ip) renku-k8s gitlab.renku-k8s` line
 in your `/etc/hosts`.

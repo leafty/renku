@@ -16,6 +16,10 @@ spec:
       name: http
     - port: 22
       targetPort: ssh
+<<<<<<< Updated upstream
+=======
+      protocol: TCP
+>>>>>>> Stashed changes
       name: ssh
   selector:
     app: {{ template "gitlab.name" . }}

@@ -61,8 +61,8 @@ class SpawnerMixin():
                 self.user_options.get('project', ''),
             'CI_COMMIT_SHA':
                 self.user_options.get('commit_sha', ''),
-            'GITLAB_HOST':
-                os.environ.get('GITLAB_HOST', 'http://gitlab.renku.build'),
+            'GITLAB_URL':
+                os.environ.get('GITLAB_URL', 'http://gitlab.renku.build'),
             'CI_REF_NAME':
                 self.user_options.get('branch', 'master'),
         })
@@ -86,7 +86,7 @@ class SpawnerMixin():
         namespace = options.get('namespace')
         project = options.get('project')
 
-        url = os.getenv('GITLAB_HOST', 'http://gitlab.renku.build')
+        url = os.getenv('GITLAB_URL', 'http://gitlab.renku.build')
 
         gl = gitlab.Gitlab(
             url, api_version=4, oauth_token=auth_state['access_token']

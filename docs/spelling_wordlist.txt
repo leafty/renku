@@ -15,8 +15,12 @@ indices
 io
 Janusgraph
 json
+jupyter
 Keycloak
 keycloak
+ku
+kubernetes
+kus
 metadata
 microservices
 middleware

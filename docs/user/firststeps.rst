@@ -34,9 +34,21 @@ Install ``renku`` and start the shell:
 
 .. code-block:: console
 
-    $ pipenv install --skip-lock renku
-    $ pipenv lock --pre
+    $ pipenv install --pre renku
     $ pipenv shell
+
+.. note::
+
+    You may get a ``ValueError: unknown locale: UTF-8`` - in that case, add
+    these lines to your ``~/.bash_profile``:
+
+    .. code-block:: bash
+
+        export LC_ALL=en_US.UTF-8
+        export LANG=en_US.UTF-8
+
+    and run ``source ~/.bash_profile``
+
 
 Initialize the project as a Renku project:
 
@@ -67,13 +79,13 @@ or publication.
     Creating a dataset ... OK
     $ ls -l data
     total 0
-    drwxr-xr-x  3 rok  staff  102 May 22 17:30 mydata
+    drwxr-xr-x  3 rok  staff  102 May 22 17:30 mydataset
 
 At this point, our dataset just consists of metadata in JSON-LD format:
 
 .. code-block:: console
 
-    $ cat data/mydata/metadata.yml
+    $ cat data/mydataset/metadata.yml
     '@context':
       added: http://schema.org/dateCreated
       affiliation: scoro:affiliate
@@ -102,7 +114,7 @@ At this point, our dataset just consists of metadata in JSON-LD format:
     created: 2018-05-22 15:30:06.071631
     files: {}
     identifier: 6a354882-8308-42c0-9516-0b3c55b81f53
-    name: mydata
+    name: mydataset
 
 We can import data from a variety of sources: local directories, remote URLs,
 local or remote git repositories or other renku project. Here, we will import the
@@ -110,8 +122,7 @@ local or remote git repositories or other renku project. Here, we will import th
 
 .. code-block:: console
 
-    $ renku dataset add mydataset https://raw.githubusercontent.com/
-    SwissDataScienceCenter/renku/master/README.rst
+    $ renku dataset add mydataset https://raw.githubusercontent.com/SwissDataScienceCenter/renku/master/README.rst
 
 Until now, we have created a Renku project and populated it with a dataset and
 some data. Next, we will see how to use Renku to create a repeatable workflow.

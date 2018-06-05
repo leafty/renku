@@ -55,10 +55,11 @@ gitlabDirs() {
 }
 
 dockerNetwork()  {
-    if [ -z $(docker network ls -q -f name=${DOCKER_NETWORK}) ]; then
-        echo "[Info] Creating docker network ${DOCKER_NETWORK}..."
-        docker network create ${DOCKER_NETWORK}
-    fi
+    echo
+    # if [ -z $(docker network ls -q -f name=${DOCKER_NETWORK}) ]; then
+    #     echo "[Info] Creating docker network ${DOCKER_NETWORK}..."
+    #     docker network create ${DOCKER_NETWORK}
+    # fi
 }
 
 unregisterGitlabRunners() {
@@ -85,13 +86,12 @@ registerGitlabRunners() {
                 -n -u ${GITLAB_URL} \
                 --name $$container-shell \
                 -r ${GITLAB_RUNNERS_TOKEN} \
-                --executor shell \
-                --env RENKU_REVIEW_DOMAIN=${PLATFORM_DOMAIN} \
-                --env RENKU_RUNNER_NETWORK=${DOCKER_NETWORK} \
+                --executor docker \
                 --locked=false \
                 --run-untagged=false \
+                --docker-volumes /var/run/docker.sock:/var/run/docker.sock \
                 --docker-image ${DOCKER_PREFIX}renku-python:${PLATFORM_VERSION} \
-                --docker-network-mode=review \
+                --docker-network-mode=renku_default \
                 --docker-pull-policy "if-not-present"; \
     done
 }

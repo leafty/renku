@@ -154,19 +154,19 @@ services:
       default:
         aliases:
           - gitlab.${PLATFORM_DOMAIN}
-      review:
-        aliases:
-          - gitlab.${PLATFORM_DOMAIN}
+      # review:
+      #   aliases:
+      #     - gitlab.${PLATFORM_DOMAIN}
 
   gitlab-runner:
-    image: ${DOCKER_PREFIX}gitlab-runner:${PLATFORM_VERSION}
+    image: gitlab/gitlab-runner
     restart: always
     volumes:
       - gitlab-runner-data:/etc/gitlab-runner
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - default
-      - review
+      # - review
 
   storage:
     image: ${DOCKER_PREFIX}renku-storage:${PLATFORM_VERSION}
@@ -254,7 +254,7 @@ services:
       - ./services/traefik/ssl/:/ssl/:ro
     networks:
       - default
-      - review
+      # - review
 
   jupyterhub:
     image: ${DOCKER_PREFIX}jupyterhub:${PLATFORM_VERSION}
@@ -291,9 +291,9 @@ services:
       default:
         aliases:
           - jupyterhub.${PLATFORM_DOMAIN}
-      review:
-        aliases:
-          - jupyterhub.${PLATFORM_DOMAIN}
+      # review:
+      #   aliases:
+      #     - jupyterhub.${PLATFORM_DOMAIN}
 
   notebooks:
     build: services/notebooks
@@ -303,6 +303,6 @@ services:
       JUPYTERHUB_API_TOKEN: ${JUPYTERHUB_RENKU_NOTEBOOKS_SERVICE_TOKEN}
       JUPYTERHUB_API_URL: http://jupyterhub:8000/hub/api
       JUPYTERHUB_SERVICE_PREFIX: /services/notebooks/
-networks:
-  review:
-    external: true
+# networks:
+#   review:
+#     external: true

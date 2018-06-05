@@ -184,7 +184,8 @@ project and, if necessary, update results in response to new data or even
 changed source code.
 
 Lets modify one of the two files we are using here -- open a text editor and
-simply remove the first few lines from ``data/mydataset/README.rst``. When you are done, commit your change with this command:
+simply remove the first few lines from ``data/mydataset/README.rst``. When you
+are done, commit your change with this command:
 
 .. code-block:: console
 
@@ -198,6 +199,7 @@ To see what effect this has on the steps we have done so far, use the ``renku st
     On branch master
     Files generated from outdated inputs:
       (use "renku log <file>..." to see the full lineage)
+      (use "renku update <file>..." to generate the file from its latest inputs)
 
           readme_renku: data/mydataset/README.rst#42a770ef
           readme_science: data/mydataset/README.rst#42a770ef
@@ -221,36 +223,37 @@ this, we can use the ``update`` command:
 
     $ renku update
     ...
+    Resolved '.renku/workflow/55e02a7b49c645b1add0fe29f3378cd1.cwl' to 'file://.../.renku/workflow/55e02a7b49c645b1add0fe29f3378cd1.cwl'
+    [workflow 55e02a7b49c645b1add0fe29f3378cd1.cwl] start
+    [step step_2] start
+    [job step_2] /private/var/folders/wz/myhc0xj14n5585p3mmqhdn_c0000gn/T/tmpuxz7xqbm$ grep \
+        -i \
+        renku \
+        /private/var/folders/wz/myhc0xj14n5585p3mmqhdn_c0000gn/T/tmpf6x9prix/stg88c26013-0326-4de2-bd74-945d27f26761/README.rst > /private/var/folders/wz/myhc0xj14n5585p3mmqhdn_c0000gn/T/tmpuxz7xqbm/readme_renku
+    [job step_2] completed success
+    [step step_2] completed success
+    [step step_1] start
+    [job step_1] /private/var/folders/wz/myhc0xj14n5585p3mmqhdn_c0000gn/T/tmpncblg93r$ grep \
+        -i \
+        science \
+        /private/var/folders/wz/myhc0xj14n5585p3mmqhdn_c0000gn/T/tmp0h4e10tl/stg01f29fae-88f7-41d1-857b-7e47e8df78f6/README.rst > /private/var/folders/wz/myhc0xj14n5585p3mmqhdn_c0000gn/T/tmpncblg93r/readme_science
+    [job step_1] completed success
+    [step step_1] completed success
+    [step step_3] start
+    unrecognized extension field `http://commonwl.org/cwltool#generation`.  Did you include a $schemas section?
+    foreign properties set()
+    unrecognized extension field `http://commonwl.org/cwltool#generation`.  Did you include a $schemas section?
+    foreign properties set()
+    [job step_3] /private/var/folders/wz/myhc0xj14n5585p3mmqhdn_c0000gn/T/tmp6x9s0bsp$ wc \
+        /private/var/folders/wz/myhc0xj14n5585p3mmqhdn_c0000gn/T/tmpuqh5otb2/stg6fa92377-d930-4ec0-baa0-10b4402a0295/readme_science \
+        /private/var/folders/wz/myhc0xj14n5585p3mmqhdn_c0000gn/T/tmpuqh5otb2/stg01109c83-b886-4e2a-b195-2b60c619f02a/readme_renku > /private/var/folders/wz/myhc0xj14n5585p3mmqhdn_c0000gn/T/tmp6x9s0bsp/wc.out
     [job step_3] completed success
     [step step_3] completed success
-    [workflow 13bbd0b4779246b5a8c2f2fd85fba962.cwl] completed success
-    {
-        "output_0": {
-            "location": "file:///.../demo/readme_science",
-            "basename": "readme_science",
-            "class": "File",
-            "checksum": "sha1$42513cc8dcaf92f33b9cec9f976ad7fe0554d0d5",
-            "size": 147,
-            "path": "/.../demo/readme_science"
-        },
-        "output_1": {
-            "location": "file:///.../demo/readme_renku",
-            "basename": "readme_renku",
-            "class": "File",
-            "checksum": "sha1$b73e7a9d94c6d24622ed6d48d0ea4e6dee5485b5",
-            "size": 245,
-            "path": "/.../demo/readme_renku"
-        },
-        "output_2": {
-            "location": "file:///.../demo/wc.out",
-            "basename": "wc.out",
-            "class": "File",
-            "checksum": "sha1$803e3e8c3c0f6d5985bc2192f4ac727bef6eaf5b",
-            "size": 327,
-            "path": "/.../demo/wc.out"
-        }
-    }
-    Final process status is success
+    [workflow 55e02a7b49c645b1add0fe29f3378cd1.cwl] completed success
+    Moving outputs  [                                    ]  3/3
+
+
+All the outputs that depended on `README.rst` are now updated.
 
 
 Making your project live on the Renku platform

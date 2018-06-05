@@ -288,7 +288,13 @@ your project on-line. Once you create the project, navigate to the
 
 .. image:: ../_static/images/project-settings.png
 
-In your terminal, run the following commands in your project directory:
+Behind the scenes, Renku is using a GitLab server to manage the repositories.
+In order to push to the server you need to add a valid ssh key to your account.
+To do this, log in to gitlab (e.g. http://gitlab.renku.build) and follow
+[the GitLab instructions](https://docs.gitlab.com/ce/ssh/).
+
+Once you have an ssh key added, you may return to your terminal and run the
+following commands in your project directory:
 
 .. code-block:: console
 

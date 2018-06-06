@@ -261,9 +261,8 @@ Making your project live on the Renku platform
 
 So far, the project we have created exists only on your machine. When you want
 to share the project with others, it is necessary to upload it to a server. To
-get started, navigate to the Renku platform URL in your browser -- if you spun
-up your own platform for testing purposes following e.g. `the quickstart
-instructions <setup.rst>`_, this will be at http://renku.build.
+get started, navigate to the Renku platform URL in your browser:
+https://internal.renku.ch/.
 
 The first page allows you to explore public data. You can log in by clicking
 in the upper-right of the frame:
@@ -293,7 +292,7 @@ your project on-line. Once you create the project, navigate to the
 
 Behind the scenes, Renku is using a GitLab server to manage the repositories.
 In order to push to the server you need to add a valid ssh key to your account.
-To do this, log in to gitlab (e.g. http://gitlab.renku.build) and follow
+To do this, log in to gitlab (https://internal.renku.ch/gitlab/) and follow
 [the GitLab instructions](https://docs.gitlab.com/ce/ssh/).
 
 Once you have an ssh key added, you may return to your terminal and run the

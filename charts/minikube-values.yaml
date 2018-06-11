@@ -21,7 +21,10 @@ jupyterhub:
     cookieSecret: 7c232b97bda321be7e59b9834dfadbb89652da1e0150dff9b3dadb9aa8b4caab
     baseUrl: '/jupyterhub/'
     extraEnv:
-      GITLAB_HOST: http://gitlab.renku-k8s.build
+      GITLAB_URL: http://gitlab.renku-k8s.build
+    db:
+      type: postgres
+      url: postgres+psycopg2://jupyterhub:jupyterhub@renku-postgresql:5432/jupyterhub
   proxy:
     secretToken: f89ddee5ba10f2268fcefcd4e353235c255493095cd65addf29ebebf8df86255
   auth:
@@ -31,6 +34,7 @@ jupyterhub:
 
 gitlab:
   sshPort: 2222
+  demoUserIsAdmin: true
 
 ui:
   gitlabUrl: http://gitlab.renku-k8s.build
